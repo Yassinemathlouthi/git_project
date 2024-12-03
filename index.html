@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Explorer - Solar System Adventure</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    <header>
+        <nav>
+            <div class="logo">Cosmic Explorer</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#planets">Planets</a></li>
+                <li><a href="#learning">Learning Center</a></li>
+                <li><a href="#quiz">Quiz</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button id="loginBtn">Login</button>
+                <button id="registerBtn">Register</button>
+                <button id="logoutBtn" style="display: none;">Logout</button>
+            </div>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <video autoplay muted loop id="bgVideo">
+                <source src="https://cdn.pixabay.com/vimeo/328370176/earth-24536.mp4?width=1280&hash=f50f8c2a8f6a0b0a1b1e7c5f1f1e1f1e1f1e1f1e" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hero-content">
+                <h1>Explore the Solar System</h1>
+                <p>Embark on a cosmic journey through our celestial neighborhood</p>
+                <a href="#planets" class="cta-button">Start Exploring</a>
+            </div>
+        </section>
+
+        <section id="planets" class="planets-overview">
+            <h2>Our Solar System</h2>
+            <div class="planet-filter">
+                <input type="text" id="planetSearch" placeholder="Search planets...">
+                <select id="planetCriteria">
+                    <option value="all">All Planets</option>
+                    <option value="rocky">Rocky Planets</option>
+                    <option value="gas">Gas Giants</option>
+                    <option value="dwarf">Dwarf Planets</option>
+                </select>
+            </div>
+            <div class="solar-system">
+                <div class="sun"></div>
+                <div class="orbit mercury-orbit">
+                    <div class="planet mercury" data-planet="Mercury"></div>
+                </div>
+                <div class="orbit venus-orbit">
+                    <div class="planet venus" data-planet="Venus"></div>
+                </div>
+                <div class="orbit earth-orbit">
+                    <div class="planet earth" data-planet="Earth"></div>
+                </div>
+                <div class="orbit mars-orbit">
+                    <div class="planet mars" data-planet="Mars"></div>
+                </div>
+                <div class="orbit jupiter-orbit">
+                    <div class="planet jupiter" data-planet="Jupiter"></div>
+                </div>
+                <div class="orbit saturn-orbit">
+                    <div class="planet saturn" data-planet="Saturn"></div>
+                </div>
+                <div class="orbit uranus-orbit">
+                    <div class="planet uranus" data-planet="Uranus"></div>
+                </div>
+                <div class="orbit neptune-orbit">
+                    <div class="planet neptune" data-planet="Neptune"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="learning" class="learning-center">
+            <h2>Learning Center</h2>
+            <div class="learning-content">
+                <div class="article">
+                    <h3>The Formation of Our Solar System</h3>
+                    <p>Discover the fascinating story of how our solar system came to be...</p>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+                <div class="article">
+                    <h3>Exoplanets: Worlds Beyond Our Sun</h3>
+                    <p>Explore the incredible diversity of planets orbiting distant stars...</p>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+                <div class="article">
+                    <h3>The Search for Life in the Cosmos</h3>
+                    <p>Learn about the ongoing quest to find signs of life beyond Earth...</p>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz" class="quiz-section">
+            <h2>Test Your Knowledge</h2>
+            <div class="quiz-container">
+                <div class="difficulty-selector">
+                    <button class="difficulty-btn" data-difficulty="beginner">Beginner</button>
+                    <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                    <button class="difficulty-btn" data-difficulty="pro">Pro</button>
+                </div>
+                <div id="quiz-question"></div>
+                <div id="quiz-options"></div>
+                <button id="submit-answer">Submit Answer</button>
+                <div id="quiz-result"></div>
+                <div id="quiz-score">Score: <span id="score">0</span></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2023 Cosmic Explorer. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" class="social-icon">Facebook</a>
+                <a href="#" class="social-icon">Twitter</a>
+                <a href="#" class="social-icon">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="planet-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modal-planet-name"></h2>
+            <div id="modal-planet-info"></div>
+            <div id="modal-planet-gallery"></div>
+        </div>
+    </div>
+
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Register</h2>
+            <form id="register-form">
+                <input type="email" id="register-email" placeholder="Email" required>
+                <input type="password" id="register-password" placeholder="Password" required>
+                <input type="password" id="register-confirm-password" placeholder="Confirm Password" required>
+                <div id="password-strength"></div>
+                <div id="captcha"></div>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

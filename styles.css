@@ -1,0 +1,812 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: 'Roboto', sans-serif;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    background-color: #000;
+    color: #fff;
+}
+
+.stars, .twinkling {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.stars {
+    background: #000 url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/stars.png') repeat top center;
+    z-index: -2;
+}
+
+.twinkling {
+    background: transparent url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/twinkling.png') repeat top center;
+    z-index: -1;
+    animation: move-twink-back 200s linear infinite;
+}
+
+@keyframes move-twink-back {
+    from {background-position: 0 0;}
+    to {background-position: -10000px 5000px;}
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 8vh;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.logo {
+    color: #00ffff;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 20px;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-around;
+    width: 40%;
+}
+
+.nav-links li {
+    list-style: none;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #00ffff;
+}
+
+.auth-buttons button {
+    background-color: transparent;
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.auth-buttons button:hover {
+    background-color: #00ffff;
+    color: #000;
+}
+
+.burger {
+    display: none;
+    cursor: pointer;
+}
+
+.burger div {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+#bgVideo {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+.hero-content {
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 50px;
+    margin-bottom: 20px;
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #00ffff;
+    color: #000;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #fff;
+    color: #000;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+}
+
+.planets-overview {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.planets-overview h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+}
+
+.planet-filter {
+    margin-bottom: 30px;
+}
+
+#planetSearch, #planetCriteria {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    margin-right: 10px;
+}
+
+.solar-system {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    margin: 0 auto;
+}
+
+.sun {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background-color: #ffff00;
+    border-radius: 50%;
+    box-shadow: 0 0 50px #ffff00;
+}
+
+.orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.planet {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.planet:hover {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+}
+
+.mercury-orbit {
+    width: 100px;
+    height: 100px;
+}
+
+.venus-orbit {
+    width: 150px;
+    height: 150px;
+}
+
+.earth-orbit {
+    width: 200px;
+    height: 200px;
+}
+
+.mars-orbit {
+    width: 250px;
+    height: 250px;
+}
+
+.jupiter-orbit {
+    width: 350px;
+    height: 350px;
+}
+
+.saturn-orbit {
+    width: 450px;
+    height: 450px;
+}
+
+.uranus-orbit {
+    width: 550px;
+    height: 550px;
+}
+
+.neptune-orbit {
+    width: 650px;
+    height: 650px;
+}
+
+.mercury {
+    width: 10px;
+    height: 10px;
+    background-color: #8c7e6d;
+}
+
+.venus {
+    width: 15px;
+    height: 15px;
+    background-color: #e6b88a;
+}
+
+.earth {
+    width: 16px;
+    height: 16px;
+    background-color: #6b93d6;
+}
+
+.mars {
+    width: 14px;
+    height: 14px;
+    background-color: #c1440e;
+}
+
+.jupiter {
+    width: 40px;
+    height: 40px;
+    background-color: #d8ca9d;
+}
+
+.saturn {
+    width: 36px;
+    height: 36px;
+    background-color: #ffd85c;
+}
+
+.uranus {
+    width: 26px;
+    height: 26px;
+    background-color: #82b3d1;
+}
+
+.neptune {
+    width: 24px;
+    height: 24px;
+    background-color: #3f54ba;
+}
+
+.learning-center {
+    padding: 50px 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.learning-center h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+}
+
+.learning-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.article {
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    transition: 0.3s ease;
+}
+
+.article:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+}
+
+.article h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #00ffff;
+}
+
+.article p {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.read-more {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #00ffff;
+    color: #000;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.read-more:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.quiz-section {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.quiz-section h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+}
+
+.quiz-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.difficulty-selector {
+    margin-bottom: 20px;
+}
+
+.difficulty-btn {
+    background-color: #00ffff;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.difficulty-btn:hover, .difficulty-btn.active {
+    background-color: #fff;
+    color: #000;
+}
+
+#quiz-question {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+#quiz-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#quiz-options button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: rgba(0, 255, 255, 0.2);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s ease;
+    width: 200px;
+}
+
+#quiz-options button:hover, #quiz-options button.selected {
+    background-color: rgba(0, 255, 255, 0.4);
+}
+
+#submit-answer {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #00ffff;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#submit-answer:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+#quiz-result {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.social-icon {
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #00ffff;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+    background-color: rgba(0, 0, 0, 0.9);
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #00ffff;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #00ffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modal-planet-name {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#modal-planet-info {
+    margin-bottom: 20px;
+}
+
+#modal-planet-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+#modal-planet-gallery img {
+    max-width: 200px;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+#modal-planet-gallery img:hover {
+    transform: scale(1.05);
+}
+
+@media screen and (max-width: 768px) {
+    .nav-links {
+        position: absolute;
+        right: 0px;
+        height: 92vh;
+        top: 8vh;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in;
+    }
+
+    .nav-links li {
+        opacity: 0;
+    }
+
+    .burger {
+        display: block;
+    }
+
+    .solar-system {
+        height: 400px;
+    }
+
+    .learning-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .article {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+.nav-active {
+    transform: translateX(0%);
+}
+
+@keyframes navLinkFade {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+.toggle .line1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.toggle .line2 {
+    opacity: 0;
+}
+
+.toggle .line3 {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Planet orbit animations */
+@keyframes orbit {
+    from { transform: rotate(0deg) translateX(50%) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(50%) rotate(-360deg); }
+}
+
+.mercury { animation: orbit 2s linear infinite; }
+.venus { animation: orbit 3s linear infinite; }
+.earth { animation: orbit 4s linear infinite; }
+.mars { animation: orbit 5s linear infinite; }
+.jupiter { animation: orbit 6s linear infinite; }
+.saturn { animation: orbit 7s linear infinite; }
+.uranus { animation: orbit 8s linear infinite; }
+.neptune { animation: orbit 9s linear infinite; }
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1c2331, #111827);
+    margin: 10% auto;
+    padding: 40px;
+    border: 1px solid #00ffff;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    position: relative;
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #00ffff;
+    text-decoration: none;
+}
+
+.modal h2 {
+    color: #00ffff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #00ffff;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #00ffff;
+    background-color: rgba(0, 255, 255, 0.1);
+    color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: #00ffff;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-submit:hover {
+    background-color: #00cccc;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+}
+
+.form-footer {
+    margin-top: 20px;
+    text-align: center;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.form-footer a {
+    color: #00ffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.form-footer a:hover {
+    color: #00cccc;
+    text-decoration: underline;
+}
+
+#password-strength {
+    margin-top: 5px;
+    font-size: 14px;
+    text-align: right;
+}
+
+#captcha {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#captcha input {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #00ffff;
+    background-color: rgba(0, 255, 255, 0.1);
+    color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Responsive design */
+@media screen and (max-width: 480px) {
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .modal h2 {
+        font-size: 20px;
+    }
+
+    .form-group input,
+    .btn-submit {
+        font-size: 14px;
+    }
+}
