@@ -131,11 +131,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 moons: 14,
                 description: 'Neptune is known for its deep blue color and strong winds.',
                 images: ['https://source.unsplash.com/featured/?neptune,planet', 'https://source.unsplash.com/featured/?milkyway']
+            },
+            Pluto: {
+                type: 'Dwarf planet',
+                distance: '5.906 billion km',
+                moons: 5,
+                description: 'Pluto is a dwarf planet known for its icy surface and its largest moon, Charon.',
+                images: ['https://source.unsplash.com/featured/?pluto,planet', 'https://source.unsplash.com/featured/?dwarf']
+            },
+            Ceres: {
+                type: 'Dwarf planet',
+                distance: '414 million km',
+                moons: 0,
+                description: 'Ceres is the largest object in the asteroid belt and the smallest recognized dwarf planet.',
+                images: ['https://source.unsplash.com/featured/?ceres,planet', 'https://source.unsplash.com/featured/?asteroid']
+            },
+            Haumea: {
+                type: 'Dwarf planet',
+                distance: '6.452 billion km',
+                moons: 2,
+                description: 'Haumea is an elongated dwarf planet known for its fast rotation and ring system.',
+                images: ['https://source.unsplash.com/featured/?haumea,planet', 'https://source.unsplash.com/featured/?space']
+            },
+            Makemake: {
+                type: 'Dwarf planet',
+                distance: '6.850 billion km',
+                moons: 1,
+                description: 'Makemake is a dwarf planet with a reddish surface and a small known moon.',
+                images: ['https://source.unsplash.com/featured/?makemake,planet', 'https://source.unsplash.com/featured/?galaxy']
+            },
+            Eris: {
+                type: 'Dwarf planet',
+                distance: '10.125 billion km',
+                moons: 1,
+                description: 'Eris is one of the most massive dwarf planets and was once considered for planetary status.',
+                images: ['https://source.unsplash.com/featured/?eris,planet', 'https://source.unsplash.com/featured/?cosmos']
             }
         };
-
+        
         return planetData[planetName];
     }
+    
 
     // Quiz functionality
     const quizQuestion = document.getElementById('quiz-question');
@@ -264,271 +300,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadQuestion();
 
-    // Login and Register functionality
     const loginBtn = document.getElementById('loginBtn');
-    const registerBtn = document.getElementById('registerBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const loginModal = document.getElementById('login-modal');
-    const registerModal = document.getElementById('register-modal');
-    const loginForm = document.getElementById('login-form');
-    const registerForm = document.getElementById('register-form');
+const registerBtn = document.getElementById('registerBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const loginModal = document.getElementById('login-modal');
+const registerModal = document.getElementById('register-modal');
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
 
-    loginBtn.addEventListener('click', () => loginModal.style.display = 'block');
-    registerBtn.addEventListener('click', () => registerModal.style.display = 'block');
+// Simulation d'une base de données locale
+function saveUser(email, password) {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    users.push({ email, password });
+    localStorage.setItem('users', JSON.stringify(users));
+}
 
-    document.querySelectorAll('.close-modal').forEach(closeBtn => {
-        closeBtn.addEventListener('click', () => {
-            loginModal.style.display = 'none';
-            registerModal.style.display = 'none';
-        });
+function isUserRegistered(email, password) {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    return users.some(user => user.email === email && user.password === password);
+}
+
+loginBtn.addEventListener('click', () => loginModal.style.display = 'block');
+registerBtn.addEventListener('click', () => registerModal.style.display = 'block');
+
+document.querySelectorAll('.close-modal').forEach(closeBtn => {
+    closeBtn.addEventListener('click', () => {
+        loginModal.style.display = 'none';
+        registerModal.style.display = 'none';
     });
+});
 
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
-        // Here you would typically send a request to your server to authenticate the user
-        console.log('Login attempt:', email, password);
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    if (isUserRegistered(email, password)) {
+        alert('Login successful!');
         loginModal.style.display = 'none';
         loginBtn.style.display = 'none';
         registerBtn.style.display = 'none';
         logoutBtn.style.display = 'inline-block';
-    });
+    } else {
+        alert('Invalid login! Please register first.');
+    }
+});
 
-    registerForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = document.getElementById('register-email').value;
-        const password = document.getElementById('register-password').value;
-        const confirmPassword = document.getElementById('register-confirm-password').value;
-        if (password !== confirmPassword) {
-            alert("Passwords don't match");
-            return;
-        }
-        // Here you would typically send a request to your server to register the user
-        console.log('Register attempt:', email, password);
-        registerModal.style.display = 'none';
-        loginBtn.style.display = 'none';
-        registerBtn.style.display = 'none';
-        logoutBtn.style.display = 'inline-block';
-    });
+registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+    const confirmPassword = document.getElementById('register-confirm-password').value;
 
-    logoutBtn.addEventListener('click', () => {
-        // Here you would typically send a request to your server to log out the user
-        console.log('User logged out');
-        loginBtn.style.display = 'inline-block';
-        registerBtn.style.display = 'inline-block';
-        logoutBtn.style.display = 'none';
-    });
-
-    // Password strength meter
-    const passwordInput = document.getElementById('register-password');
-    const passwordStrength = document.getElementById('password-strength');
-
-    passwordInput.addEventListener('input', () => {
-        const password = passwordInput.value;
-        let strength = 0;
-        if (password.match(/[a-z]+/)) strength++;
-        if (password.match(/[A-Z]+/)) strength++;
-        if (password.match(/[0-9]+/)) strength++;
-        if (password.match(/[$@#&!]+/)) strength++;
-
-        switch (strength) {
-            case 0:
-                passwordStrength.textContent = 'Very Weak';
-                passwordStrength.style.color = 'red';
-                break;
-            case 1:
-                passwordStrength.textContent = 'Weak';
-                passwordStrength.style.color = 'orange';
-                break;
-            case 2:
-                passwordStrength.textContent = 'Medium';
-                passwordStrength.style.color = 'yellow';
-                break;
-            case 3:
-                passwordStrength.textContent = 'Strong';
-                passwordStrength.style.color = 'light green';
-                break;
-            case 4:
-                passwordStrength.textContent = 'Very Strong';
-                passwordStrength.style.color = 'green';
-                break;
-        }
-    });
-
-    // Simple CAPTCHA
-    const captchaDiv = document.getElementById('captcha');
-    const captchaText = generateCaptcha();
-    captchaDiv.textContent = `CAPTCHA: ${captchaText}`;
-    const captchaInput = document.createElement('input');
-    captchaInput.type = 'text';
-    captchaInput.placeholder = 'Enter CAPTCHA';
-    captchaDiv.appendChild(captchaInput);
-
-    function generateCaptcha() {
-        return Math.random().toString(36).substring(2, 8).toUpperCase();
+    if (password !== confirmPassword) {
+        alert("Passwords don't match");
+        return;
     }
 
-    registerForm.addEventListener('submit', (e) => {
-        if (captchaInput.value !== captchaText) {
-            e.preventDefault();
-            alert('CAPTCHA is incorrect');
-        }
-    });
+    saveUser(email, password);
+    alert('Registration successful! You can now log in.');
+    registerModal.style.display = 'none';
+    loginBtn.style.display = 'inline-block';
+    registerBtn.style.display = 'inline-block';
+});
 
-    // Admin functionality (simplified for demonstration)
-    const adminLink = document.createElement('a');
-    adminLink.href = '#';
-    adminLink.textContent = 'Admin';
-    adminLink.style.display = 'none';
-    document.querySelector('.nav-links').appendChild(adminLink);
+logoutBtn.addEventListener('click', () => {
+    alert('You have been logged out.');
+    loginBtn.style.display = 'inline-block';
+    registerBtn.style.display = 'inline-block';
+    logoutBtn.style.display = 'none';
+});
 
-    adminLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        alert('Admin functionality would be implemented here.');
-    });
-
-    // Simulating admin login
-    loginForm.addEventListener('submit', (e) => {
-        const email = document.getElementById('login-email').value;
-        if (email === 'admin@example.com') {
-            adminLink.style.display = 'inline-block';
-        }
-    });
-    document.addEventListener('DOMContentLoaded', () => {
-        // ... (keep existing code)
-    
-        // Login and Register functionality
-        const loginBtn = document.getElementById('loginBtn');
-        const registerBtn = document.getElementById('registerBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const loginModal = document.getElementById('login-modal');
-        const registerModal = document.getElementById('register-modal');
-        const loginForm = document.getElementById('login-form');
-        const registerForm = document.getElementById('register-form');
-        const switchToRegister = document.getElementById('switch-to-register');
-        const switchToLogin = document.getElementById('switch-to-login');
-    
-        loginBtn.addEventListener('click', () => loginModal.style.display = 'block');
-        registerBtn.addEventListener('click', () => registerModal.style.display = 'block');
-    
-        switchToRegister.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginModal.style.display = 'none';
-            registerModal.style.display = 'block';
-        });
-    
-        switchToLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            registerModal.style.display = 'none';
-            loginModal.style.display = 'block';
-        });
-    
-        document.querySelectorAll('.close-modal').forEach(closeBtn => {
-            closeBtn.addEventListener('click', () => {
-                loginModal.style.display = 'none';
-                registerModal.style.display = 'none';
-            });
-        });
-    
-        window.addEventListener('click', (e) => {
-            if (e.target === loginModal) loginModal.style.display = 'none';
-            if (e.target === registerModal) registerModal.style.display = 'none';
-        });
-    
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            // Here you would typically send a request to your server to authenticate the user
-            console.log('Login attempt:', email, password);
-            loginModal.style.display = 'none';
-            loginBtn.style.display = 'none';
-            registerBtn.style.display = 'none';
-            logoutBtn.style.display = 'inline-block';
-        });
-    
-        registerForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const confirmPassword = document.getElementById('register-confirm-password').value;
-            if (password !== confirmPassword) {
-                alert("Passwords don't match");
-                return;
-            }
-            // Here you would typically send a request to your server to register the user
-            console.log('Register attempt:', email, password);
-            registerModal.style.display = 'none';
-            loginBtn.style.display = 'none';
-            registerBtn.style.display = 'none';
-            logoutBtn.style.display = 'inline-block';
-        });
-    
-        logoutBtn.addEventListener('click', () => {
-            // Here you would typically send a request to your server to log out the user
-            console.log('User logged out');
-            loginBtn.style.display = 'inline-block';
-            registerBtn.style.display = 'inline-block';
-            logoutBtn.style.display = 'none';
-        });
-    
-        // Password strength meter
-        const passwordInput = document.getElementById('register-password');
-        const passwordStrength = document.getElementById('password-strength');
-    
-        passwordInput.addEventListener('input', () => {
-            const password = passwordInput.value;
-            let strength = 0;
-            if (password.match(/[a-z]+/)) strength++;
-            if (password.match(/[A-Z]+/)) strength++;
-            if (password.match(/[0-9]+/)) strength++;
-            if (password.match(/[$@#&!]+/)) strength++;
-    
-            switch (strength) {
-                case 0:
-                    passwordStrength.textContent = 'Very Weak';
-                    passwordStrength.style.color = '#ff4136';
-                    break;
-                case 1:
-                    passwordStrength.textContent = 'Weak';
-                    passwordStrength.style.color = '#ff851b';
-                    break;
-                case 2:
-                    passwordStrength.textContent = 'Medium';
-                    passwordStrength.style.color = '#ffdc00';
-                    break;
-                case 3:
-                    passwordStrength.textContent = 'Strong';
-                    passwordStrength.style.color = '#2ecc40';
-                    break;
-                case 4:
-                    passwordStrength.textContent = 'Very Strong';
-                    passwordStrength.style.color = '#01ff70';
-                    break;
-            }
-        });
-    
-        // Simple CAPTCHA
-        const captchaDiv = document.getElementById('captcha');
-        const captchaText = generateCaptcha();
-        captchaDiv.innerHTML = `<p>CAPTCHA: ${captchaText}</p>`;
-        const captchaInput = document.createElement('input');
-        captchaInput.type = 'text';
-        captchaInput.placeholder = 'Enter CAPTCHA';
-        captchaDiv.appendChild(captchaInput);
-    
-        function generateCaptcha() {
-            return Math.random().toString(36).substring(2, 8).toUpperCase();
-        }
-    
-        registerForm.addEventListener('submit', (e) => {
-            if (captchaInput.value !== captchaText) {
-                e.preventDefault();
-                alert('CAPTCHA is incorrect');
-            }
-        });
-    
-        // ... (keep the rest of your existing code)
-    });
 });
